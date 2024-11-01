@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://cwf0un7ap5hxx"]
+
+[ext_resource type="Script" path="res://Scenes/main.gd" id="1_52qbm"]
+[ext_resource type="PackedScene" uid="uid://dc4p5yobm2xd0" path="res://GLB format/snow-tile-straight.glb" id="2_55dhx"]
+[ext_resource type="PackedScene" uid="uid://b2fdxg27ur6x0" path="res://GLB format/snow-tile.glb" id="2_of6dc"]
+[ext_resource type="PackedScene" uid="uid://hjyr7yf704c4" path="res://GLB format/snow-tile-corner-round.glb" id="3_6qc0m"]
+[ext_resource type="PackedScene" uid="uid://bv6jxv1ih3ayj" path="res://GLB format/snow-tile-spawn-end-round.glb" id="5_q8g65"]
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_52qbm")
+tile_straight = ExtResource("2_55dhx")
+tile_corner = ExtResource("3_6qc0m")
+tile_empty = ExtResource("2_of6dc")
+tile_start = ExtResource("5_q8g65")
+tile_end = ExtResource("5_q8g65")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.758646, 0.651503, 0, -0.651503, 0.758646, 8, 8, 13.3645)
+fov = 60.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 4, 7)
