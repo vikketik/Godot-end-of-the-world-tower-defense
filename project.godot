@@ -21,4 +21,4 @@ PathGeneratorInstance="*res://Scripts/path_generator.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg")
+enabled=PackedStringArray()
