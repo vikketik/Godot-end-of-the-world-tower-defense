@@ -6,6 +6,7 @@ extends Node3D
 @export var tile_end:PackedScene
 @export var tile_empty:Array[PackedScene]
 @export var enemy:PackedScene
+@export var basic_enemy:PackedScene
 
 @export var map_height : int = 9
 @export var map_lenght : int = 16
@@ -26,27 +27,29 @@ func _add_curve_point(c3d:Curve3D, v3:Vector3) ->bool:
 	return true
 	
 func _pop_along_grid():
-	var box = enemy.instantiate()
+	var box = basic_enemy.instantiate()
 	
-	var c3d:Curve3D = Curve3D.new()
+	add_child(box)
 	
-	for element in path_generator.get_path_route():
-		c3d.add_point(Vector3(element.x, 0.2, element.y))
-
-	var p3d:Path3D = Path3D.new()
-	add_child(p3d)
-	p3d.curve = c3d
-	
-	var pf3d:PathFollow3D = PathFollow3D.new()
-	p3d.add_child(pf3d)
-	pf3d.add_child(box)
-	
-	var curr_distance:float = 0.0
-	
-	while curr_distance < c3d.point_count-1:
-		curr_distance += 0.02
-		pf3d.progress = clamp(curr_distance, 0, c3d.point_count-1.00001)
-		await get_tree().create_timer(0.01).timeout
+#	var c3d:Curve3D = Curve3D.new()
+#
+#	for element in path_generator.get_path_route():
+#		c3d.add_point(Vector3(element.x, 0.2, element.y))
+#
+#	var p3d:Path3D = Path3D.new()
+#	add_child(p3d)
+#	p3d.curve = c3d
+#
+#	var pf3d:PathFollow3D = PathFollow3D.new()
+#	p3d.add_child(pf3d)
+#	pf3d.add_child(box)
+#
+#	var curr_distance:float = 0.0
+#
+#	while curr_distance < c3d.point_count-1:
+#		curr_distance += 0.02
+#		pf3d.progress = clamp(curr_distance, 0, c3d.point_count-1.00001)
+#		await get_tree().create_timer(0.01).timeout
 
 	
 func _complete_grid():

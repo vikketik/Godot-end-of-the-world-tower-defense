@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cwf0un7ap5hxx"]
+[gd_scene load_steps=12 format=3 uid="uid://cwf0un7ap5hxx"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_1td5s"]
 [ext_resource type="PackedScene" uid="uid://dc4p5yobm2xd0" path="res://Assets/GLB format/snow-tile-straight.glb" id="2_d78ny"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cfioj6lqcw7io" path="res://Assets/GLB format/snow-tile-hill.glb" id="8_arjug"]
 [ext_resource type="PackedScene" uid="uid://brdoouv7y0g5x" path="res://Assets/GLB format/snow-tile-crystal.glb" id="9_k3v0o"]
 [ext_resource type="PackedScene" uid="uid://bb4rb5bwpdg3u" path="res://Assets/GLB format/enemy-ufo-b.glb" id="10_itims"]
+[ext_resource type="PackedScene" uid="uid://bjnrcro46ixwe" path="res://Scenes/basic_enemy.tscn" id="11_wxxtt"]
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_1td5s")
@@ -19,10 +20,11 @@ tile_start = ExtResource("4_1lbw4")
 tile_end = ExtResource("4_1lbw4")
 tile_empty = Array[PackedScene]([ExtResource("5_s4j75"), ExtResource("5_s4j75"), ExtResource("5_s4j75"), ExtResource("5_s4j75"), ExtResource("5_s4j75"), ExtResource("6_yk17m"), ExtResource("7_vk3lo"), ExtResource("8_arjug"), ExtResource("9_k3v0o"), ExtResource("5_s4j75"), ExtResource("5_s4j75"), ExtResource("5_s4j75")])
 enemy = ExtResource("10_itims")
+basic_enemy = ExtResource("11_wxxtt")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.758646, 0.651503, 0, -0.651503, 0.758646, 8, 8, 13.3645)
 fov = 60.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 4, 7)
+transform = Transform3D(1, 0, 0, 0, 0.758646, 0.651503, 0, -0.651503, 0.758646, 8, 8, 13.3645)
