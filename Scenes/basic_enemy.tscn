@@ -1,0 +1,90 @@
+[gd_scene load_steps=9 format=3 uid="uid://bjnrcro46ixwe"]
+
+[ext_resource type="Script" path="res://Scripts/Basic_enemy.gd" id="1_4f353"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_bhg0k"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_5ogvw"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_pmmq8"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_pwot7"]
+
+[sub_resource type="Animation" id="Animation_st8ty"]
+resource_name = "Spawn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_img10"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h0kpb"]
+_data = {
+"RESET": SubResource("Animation_img10"),
+"Spawn": SubResource("Animation_st8ty")
+}
+
+[node name="BasicEnemy" type="Node3D"]
+script = ExtResource("1_4f353")
+
+[node name="EnemyStateChart" type="Node" parent="."]
+script = ExtResource("3_bhg0k")
+
+[node name="CompoundState" type="Node" parent="EnemyStateChart"]
+script = ExtResource("4_5ogvw")
+initial_state = NodePath("Spawning")
+
+[node name="Spawning" type="Node" parent="EnemyStateChart/CompoundState"]
+script = ExtResource("5_pwot7")
+
+[node name="ToTraveling" type="Node" parent="EnemyStateChart/CompoundState/Spawning"]
+script = ExtResource("5_pmmq8")
+to = NodePath("../../Travelling")
+event = &"to_traveling"
+delay_in_seconds = "0.0"
+
+[node name="Travelling" type="Node" parent="EnemyStateChart/CompoundState"]
+script = ExtResource("5_pwot7")
+
+[node name="ToDespawning" type="Node" parent="EnemyStateChart/CompoundState/Travelling"]
+script = ExtResource("5_pmmq8")
+to = NodePath("../../Despawning")
+event = &"to_despawning"
+delay_in_seconds = "0.0"
+
+[node name="Despawning" type="Node" parent="EnemyStateChart/CompoundState"]
+script = ExtResource("5_pwot7")
+
+[node name="Dying" type="Node" parent="EnemyStateChart/CompoundState"]
+script = ExtResource("5_pwot7")
+
+[node name="Path3D" type="Path3D" parent="."]
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+loop = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_h0kpb")
+}
+
+[connection signal="state_entered" from="EnemyStateChart/CompoundState/Spawning" to="." method="_on_spawning_state_entered"]
+[connection signal="state_processing" from="EnemyStateChart/CompoundState/Travelling" to="." method="_on_travelling_state_processing"]

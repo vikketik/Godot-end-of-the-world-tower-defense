@@ -5,28 +5,30 @@ var path_config:PathGeneratorConfig = preload("res://resources/basic_path_config
 
 var path_route: Array[Vector2i]
 
-func _init():
+func _init(lenght:int, height:int):
 	generate_path()
+	
 	while(path_route.size() < path_config.min_path_size or path_route.size() > path_config.max_path_size):
 		generate_path()
 	
 func generate_path():
 	path_route.clear()
+	randomize()
 	
 	var x = 0
-	var y = int(path_config.map_height/2)
+	var y = int(path_config.map_height/2.0)
 	
 	while x < path_config.map_length:
 		if not path_route.has(Vector2i(x,y)):
 			path_route.append(Vector2i(x,y))
 			
-		var choise : int = randi_range(0,2)
+		var choice : int = randi_range(0,2)
 		
-		if choise == 0 or x % 2 == 0 or x == path_config.map_length-1:
+		if choice == 0 or x < 2 or x % 2 == 0 or x == path_config.map_length-1:
 			x += 1
-		elif choise == 1 and y < path_config.map_height-2 and not path_route.has(Vector2i(x,y+1)):
+		elif choice == 1 and y < path_config.map_height-2 and not path_route.has(Vector2i(x,y+1)):
 			y += 1
-		elif choise == 2 and y > 1 and not path_route.has(Vector2i(x,y-1)): 
+		elif choice == 2 and y > 1 and not path_route.has(Vector2i(x,y-1)):
 			y -= 1
 		
 	return path_route
