@@ -14,3 +14,7 @@ config/name="End of the world"
 run/main_scene="res://Scenes/main.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+PathGeneratorInstance="*res://Scripts/path_generator.gd"

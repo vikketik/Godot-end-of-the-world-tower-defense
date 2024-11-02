@@ -1,4 +1,4 @@
-extends Object
+extends Node
 class_name PathGenerator
 
 var grid_length : int 
@@ -43,7 +43,9 @@ func get_tile_score(tile:Vector2i) -> int:
 	
 	return score
 	
-func get_path() -> Array[Vector2i]:
+func get_path_route() -> Array[Vector2i]:
 	return path
 	
+func get_path_tile(index:int) -> Vector2i:
+	return path[index]
 
