@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b71ikqvlnam4c"]
+
+[ext_resource type="PackedScene" uid="uid://hjyr7yf704c4" path="res://Assets/GLB format/snow-tile-corner-round.glb" id="1_taxf4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0c0rp"]
+size = Vector3(1, 0.2, 1)
+
+[node name="Area3D" type="Area3D" groups=["path"]]
+
+[node name="snow-tile-corner-round" parent="." instance=ExtResource("1_taxf4")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("BoxShape3D_0c0rp")

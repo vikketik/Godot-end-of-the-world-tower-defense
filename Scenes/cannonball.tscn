@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://banx65ftq1rmv"]
+
+[ext_resource type="Script" path="res://Scripts/cannonball.gd" id="1_ljws2"]
+[ext_resource type="PackedScene" uid="uid://clxnjqog658vt" path="res://Assets/GLB format/weapon-ammo-cannonball.glb" id="1_xqxyg"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3b357"]
+radius = 0.15
+
+[node name="cannonball" type="Area3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_ljws2")
+
+[node name="Cannonball" parent="." instance=ExtResource("1_xqxyg")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_3b357")

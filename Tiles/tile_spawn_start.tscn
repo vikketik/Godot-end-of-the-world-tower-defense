@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://xb8tbihsyue3"]
+
+[ext_resource type="PackedScene" uid="uid://bv6jxv1ih3ayj" path="res://Assets/GLB format/snow-tile-spawn-end-round.glb" id="1_tylrl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yye5v"]
+size = Vector3(1, 0.2, 1)
+
+[node name="Area3D" type="Area3D" groups=["path"]]
+
+[node name="snow-tile-spawn-end-round" parent="." instance=ExtResource("1_tylrl")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("BoxShape3D_yye5v")

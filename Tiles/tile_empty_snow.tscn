@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1jvdfnj5enjn"]
+
+[ext_resource type="PackedScene" uid="uid://b2fdxg27ur6x0" path="res://Assets/GLB format/snow-tile.glb" id="1_0tem3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jvjmq"]
+size = Vector3(1, 0.2, 1)
+
+[node name="Area3D" type="Area3D" groups=["grid_empty"]]
+
+[node name="snow-tile" parent="." instance=ExtResource("1_0tem3")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("BoxShape3D_jvjmq")

@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://bng2eoejee7gg"]
+
+[ext_resource type="PackedScene" uid="uid://c27fon7v7wyxm" path="res://Assets/GLB format/weapon-cannon.glb" id="1_8t6fp"]
+[ext_resource type="Script" path="res://Scripts/turret_1.gd" id="1_xwjq6"]
+[ext_resource type="PackedScene" uid="uid://banx65ftq1rmv" path="res://Scenes/cannonball.tscn" id="2_ny02m"]
+[ext_resource type="PackedScene" uid="uid://qfxfcvvr5a71" path="res://Assets/GLB format/tower-round-base.glb" id="2_v2524"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="4_wco5a"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_nohmu"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_7r84f"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_anipo"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_gm5o7"]
+radius = 3.0
+
+[node name="Turret1" type="Node3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+script = ExtResource("1_xwjq6")
+projectile_type = ExtResource("2_ny02m")
+
+[node name="weapon-cannon" parent="." instance=ExtResource("1_8t6fp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.124073, 0)
+
+[node name="Projectile_spawn" type="Node3D" parent="weapon-cannon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.06876e-08, 0.379906, 0.236639)
+
+[node name="tower-round-base" parent="." instance=ExtResource("2_v2524")]
+
+[node name="PatrolZone" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PatrolZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_gm5o7")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("4_wco5a")
+
+[node name="ToRemoveEnemyState" type="Node" parent="StateChart"]
+script = ExtResource("5_nohmu")
+initial_state = NodePath("PatrollingState")
+
+[node name="PatrollingState" type="Node" parent="StateChart/ToRemoveEnemyState"]
+script = ExtResource("6_7r84f")
+
+[node name="ToAcquiringState" type="Node" parent="StateChart/ToRemoveEnemyState/PatrollingState"]
+script = ExtResource("7_anipo")
+to = NodePath("../../AquiringState")
+event = &"to_acquiring_state"
+delay_in_seconds = "0.0"
+
+[node name="AquiringState" type="Node" parent="StateChart/ToRemoveEnemyState"]
+script = ExtResource("6_7r84f")
+
+[node name="Attacking" type="Node" parent="StateChart/ToRemoveEnemyState/AquiringState"]
+script = ExtResource("7_anipo")
+to = NodePath("../../AtackingState")
+event = &"to_attacking_state"
+delay_in_seconds = "0.0"
+
+[node name="PatrollingState" type="Node" parent="StateChart/ToRemoveEnemyState/AquiringState"]
+script = ExtResource("7_anipo")
+to = NodePath("../../PatrollingState")
+event = &"to_patrolling_state"
+delay_in_seconds = "0.0"
+
+[node name="AtackingState" type="Node" parent="StateChart/ToRemoveEnemyState"]
+script = ExtResource("6_7r84f")
+
+[node name="PatrollingState" type="Node" parent="StateChart/ToRemoveEnemyState/AtackingState"]
+script = ExtResource("7_anipo")
+to = NodePath("../../PatrollingState")
+event = &"to_patrolling_state"
+delay_in_seconds = "0.0"
+
+[connection signal="area_entered" from="PatrolZone" to="." method="_on_patrol_zone_area_entered"]
+[connection signal="area_exited" from="PatrolZone" to="." method="_on_patrol_zone_area_exited"]
+[connection signal="state_processing" from="StateChart/ToRemoveEnemyState/PatrollingState" to="." method="_on_patrolling_state_state_processing"]
+[connection signal="state_entered" from="StateChart/ToRemoveEnemyState/AquiringState" to="." method="_on_aquiring_state_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/ToRemoveEnemyState/AquiringState" to="." method="_on_aquiring_state_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/ToRemoveEnemyState/AtackingState" to="." method="_on_atacking_state_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/ToRemoveEnemyState/AtackingState" to="." method="_on_atacking_state_state_physics_processing"]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx5m4tv78okjk"]
+
+[ext_resource type="Script" path="res://Scripts/action_button.gd" id="1_iaogd"]
+[ext_resource type="Texture2D" uid="uid://85tjxayj0js1" path="res://Images/cannon01a.png" id="2_mw1wm"]
+
+[node name="ActionButton" type="Button"]
+custom_minimum_size = Vector2(96, 96)
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_iaogd")
+action_button_icon = ExtResource("2_mw1wm")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]

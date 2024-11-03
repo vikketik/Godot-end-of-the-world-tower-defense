@@ -5,11 +5,8 @@ var path_config:PathGeneratorConfig = preload("res://resources/basic_path_config
 
 var path_route: Array[Vector2i]
 
-func _init(lenght:int, height:int):
+func _init():
 	generate_path()
-	
-	while(path_route.size() < path_config.min_path_size or path_route.size() > path_config.max_path_size):
-		generate_path()
 	
 func generate_path():
 	path_route.clear()
@@ -50,4 +47,5 @@ func get_path_route() -> Array[Vector2i]:
 	
 func get_path_tile(index:int) -> Vector2i:
 	return path_route[index]
+
 

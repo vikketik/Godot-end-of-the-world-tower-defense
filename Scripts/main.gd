@@ -7,22 +7,22 @@ extends Node3D
 @export var tile_empty:Array[PackedScene]
 
 @export var basic_enemy:PackedScene
+@export var money = 100
+
+@onready var cam = $Camera3D
+var RAYCAST_LENGTH:float = 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_complete_grid()
-	
-	await get_tree().create_timer(2).timeout
-	_pop_along_grid()
-	
-func _add_curve_point(c3d:Curve3D, v3:Vector3) ->bool:
-	c3d.add_point(v3)
-	return true
-	
-func _pop_along_grid():
-	var box = basic_enemy.instantiate()
-	
-	add_child(box)
+	while 1+1 == 2:
+		await get_tree().create_timer(2).timeout
+		var enemy2:Node3D = basic_enemy.instantiate()
+		add_child(enemy2)
+		enemy2.add_to_group("enemies")
+		
+func _process(_delta):
+	$Control/cash.text = "Cash$%d" % money
 	
 func _complete_grid():
 	for x in range(PathGeneratorInstance.path_config.map_length):
