@@ -23,6 +23,11 @@ buses/default_bus_layout="res://Audio/default_bus_layout.tres"
 
 PathGeneratorInstance="*res://Scripts/path_generator.gd"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg")
